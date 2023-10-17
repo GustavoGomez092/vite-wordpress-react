@@ -94,13 +94,18 @@ const nameReplace = async (appName) => {
     const replaceVal = appName;
     const newContent = oldContent.replace(regex, replaceVal);
     fs.writeFileSync(filePath, newContent, {encoding: 'utf-8'});
-    console.log(`Edited file: ${filePath}`);
+    console.log(chalk.hex('#61DBFB')(`Edited file: ${filePath}`));
   };
   
   const main = () => {
     const dir = './';
     const filePaths = walk(dir);
     filePaths.forEach(filePath => edit(filePath));
+    console.log('');
+    console.log('');
+    console.log(chalk.hex('#8DC891')('The plugin name and files have been set to: ') + chalk.hex('#FAC863')(appName));
+    console.log(chalk.hex('#8DC891')('Init process complete! Happy coding!'));
+    console.log('');
   };
   
   main();
