@@ -18,6 +18,7 @@ class WPReact {
     function __construct() {
     require('plugin_options.php');
     add_action('wp_enqueue_scripts', [$this, 'REST_API_DATA_LOCALIZER'] );
+    add_action('wp_enqueue_scripts', [$this, 'custom_header_scripts'] );
     }
 
     /**
@@ -25,8 +26,14 @@ class WPReact {
      */
 
     function add_type_attribute_front($tag, $handle, $src) {
+
+        error_log($tag);
+        
         // change the script tag by adding type="module" and return it.
         if ($handle  === 'WPReact-plugin-dev' || $handle  === 'WPReact-plugin-prod') {
+            $tag = '<script type="module" src="' . esc_url($src) . '"></script>';
+            return $tag;
+        } else if ($handle  === 'WPReact') {
             $tag = '<script type="module" src="' . esc_url($src) . '"></script>';
             return $tag;
         }
@@ -73,25 +80,26 @@ class WPReact {
      * Stupid react code for shit to work
      */
     function custom_header_scripts()
-    {
-        error_log(plugins_url( "/@react-refresh", __FILE__ ));
-        echo '<script type="module">
-        import RefreshRuntime from "http://localhost:5173/@react-refresh"
-        RefreshRuntime.injectIntoGlobalHook(window)
-        window.$RefreshReg$ = () => {}
-        window.$RefreshSig$ = () => (type) => type
-        window.__vite_plugin_react_preamble_installed__ = true
-        </script>
+    {   
+        add_filter('script_loader_tag', [$this, 'add_type_attribute_front'], 10, 3);
+        $name = 'WPReact';
+
+        $head_script = '
+        <script></script>
+        <script type="module" src="http://localhost:5173/HMR.js"></script>
         <script type="module" src="http://localhost:5173/@vite/client"></script>
         <script type="module" src="http://localhost:5173/src/main.jsx"></script>
         ';
+
+        wp_register_script( $name, '' );
+        wp_enqueue_script( $name );
+        wp_add_inline_script( $name, $head_script, 'before' );
     }
 
     /**
      * Plugin shortcode for front-end
      */
     function plugin_shortcode( $atts ) {
-        error_log('servis o no?');
         $handle = 'WPReact-plugin-';
 
         add_filter('script_loader_tag', [$this, 'add_type_attribute_front'], 10, 3);
@@ -103,7 +111,6 @@ class WPReact {
         wp_enqueue_style( $handle, plugins_url( "/dist/style.css", __FILE__ ), false, '0.1', 'all' );
         } else {
         $handle .= 'dev';
-        add_action( 'wp_head', [$this, 'custom_header_scripts'] );
         }
 
         /**
