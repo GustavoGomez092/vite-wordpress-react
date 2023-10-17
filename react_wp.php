@@ -1,21 +1,21 @@
 <?php
 /*
-Plugin Name: React WordPress Plugin
-Description: Use the [wp-react] shortcode to display the plugin
+Plugin Name: WPReact Plugin
+Description: Use the [WPReact] shortcode to display the plugin
 Version: 0.0.1
 Author: Gustavo Gomez
 Author URI: https://github.com/GustavoGomez092
 */
 
 
-class Wpreact {
+class WPReact {
 
     protected $plugin_options_page = '';
 
     /**
     * Class constructor
     */
-    public function __construct() {
+    function __construct() {
     require('plugin_options.php');
     add_action('wp_enqueue_scripts', [$this, 'REST_API_DATA_LOCALIZER'] );
     }
@@ -24,9 +24,9 @@ class Wpreact {
      * Script tag modifier
      */
 
-    public function add_type_attribute_front($tag, $handle, $src) {
+    function add_type_attribute_front($tag, $handle, $src) {
         // change the script tag by adding type="module" and return it.
-        if ($handle  === 'wp-react-plugin-dev' || $handle  === 'wp-react-plugin-prod') {
+        if ($handle  === 'WPReact-plugin-dev' || $handle  === 'WPReact-plugin-prod') {
             $tag = '<script type="module" src="' . esc_url($src) . '"></script>';
             return $tag;
         }
@@ -37,9 +37,9 @@ class Wpreact {
     /**
      * Initialize RADL
      */
-    public function REST_API_DATA_LOCALIZER () {
+    function REST_API_DATA_LOCALIZER () {
         // define the name of the file to be inserted
-        $name = 'serverData';
+        $name = 'WPReactData';
 
         // add the data you want to pass from PHP to JS
         // Data will be inserted in the window object with the name defined above
@@ -76,14 +76,14 @@ class Wpreact {
     {
         error_log(plugins_url( "/@react-refresh", __FILE__ ));
         echo '<script type="module">
-        import RefreshRuntime from "http://localhost:5173/wp-content/plugins/react-wp/@react-refresh"
+        import RefreshRuntime from "http://localhost:5173/@react-refresh"
         RefreshRuntime.injectIntoGlobalHook(window)
         window.$RefreshReg$ = () => {}
         window.$RefreshSig$ = () => (type) => type
         window.__vite_plugin_react_preamble_installed__ = true
         </script>
-        <script type="module" src="http://localhost:5173/wp-content/plugins/react-wp/@vite/client"></script>
-        <script type="module" src="http://localhost:5173/wp-content/plugins/react-wp/src/main.jsx"></script>
+        <script type="module" src="http://localhost:5173/@vite/client"></script>
+        <script type="module" src="http://localhost:5173/src/main.jsx"></script>
         ';
     }
 
@@ -91,7 +91,8 @@ class Wpreact {
      * Plugin shortcode for front-end
      */
     function plugin_shortcode( $atts ) {
-        $handle = 'wp-react-plugin-';
+        error_log('servis o no?');
+        $handle = 'WPReact-plugin-';
 
         add_filter('script_loader_tag', [$this, 'add_type_attribute_front'], 10, 3);
 
@@ -108,7 +109,7 @@ class Wpreact {
         /**
         * React specific stuff to make hot reload work with vite on plugin development
         */
-        $tag = '<div id="wp-react"></div>';
+        $tag = '<div id="WPReact"></div>';
         
         return $tag;
     }
@@ -116,7 +117,7 @@ class Wpreact {
     /**
      * Inserting nonce to window object for admin
      */
-    public function add_nonce() {
+    function add_nonce() {
         wp_register_script(
             'custom-js-file', 
             plugins_url( "custom.js", __FILE__ ), 
@@ -132,13 +133,13 @@ class Wpreact {
      * Custom API endpoints for admin
      */
 
-    public function get_user(WP_REST_Request $request) {
+    function get_user(WP_REST_Request $request) {
         $user = wp_get_current_user();
         return $user;
     }
 
-    public function api_init() {
-        register_rest_route('wp-react/v1', '/user/', [
+    function api_init() {
+        register_rest_route('WPReact/v1', '/user/', [
             'methods'   => 'GET',
             'callback'  => [$this, 'get_user'],
             'permission_callback'   => function () {
@@ -150,8 +151,8 @@ class Wpreact {
     /**
     * Initialize hooks.
     */
-    public function init() {
-        add_shortcode( 'wp-react', [$this, 'plugin_shortcode'] );
+    function init() {
+        add_shortcode( 'WPReact', [$this, 'plugin_shortcode'] );
         add_action('rest_api_init', [$this , 'api_init']); 
         
         // adding nonce to the window object if logged in
@@ -167,5 +168,5 @@ class Wpreact {
     }
 }
 
-$wp_react = new Wpreact();
+$wp_react = new WPReact();
 $wp_react->init();

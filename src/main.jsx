@@ -7,14 +7,14 @@ import AppBackEnd from './AppBackEnd.jsx'
 import './index.css'
 
 
-if(document.getElementById('wp-react')) {
-  ReactDOM.createRoot(document.getElementById('wp-react')).render(
+if(document.getElementById('WPReact')) {
+  ReactDOM.createRoot(document.getElementById('WPReact')).render(
   <React.StrictMode>
     <App />
   </React.StrictMode>
   )
-} else if(document.getElementById('wp-react-options')) {
-  ReactDOM.createRoot(document.getElementById('wp-react-options')).render(
+} else if(document.getElementById('WPReact-options')) {
+  ReactDOM.createRoot(document.getElementById('WPReact-options')).render(
   <React.StrictMode>
     <AppBackEnd />
   </React.StrictMode>

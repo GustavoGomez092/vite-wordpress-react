@@ -7,42 +7,42 @@ class plugin_options {
   /**
   * Initialize hooks.
   */
-  public function init() {
+  function init() {
 
     add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_admin_scripts' ) );
     add_action( 'admin_init', array( $this, 'register_plugin_settings' ) );
     add_action('admin_menu', array( $this, 'create_admin_menu_page' ) );
   }
 
-  public function register_plugin_settings() {
-      register_setting( 'wp-react-settings-group', 'wp-react-plugin' );
+  function register_plugin_settings() {
+      register_setting( 'WPReact-settings-group', 'WPReact-plugin' );
   }
 
   /**
   *
   * Create new plugin options page under the Settings menu.
   */
-  public function create_admin_menu_page() {
+  function create_admin_menu_page() {
     $this->plugin_options_page = add_menu_page('Plugin options', 'plugin options', 'manage_options', __FILE__, array( $this, 'render_plugin_options_page' ), 'dashicons-editor-table' );
   }
 
-  public function render_plugin_options_page() {
+  function render_plugin_options_page() {
     echo '<script type="module">
-    import RefreshRuntime from "http://localhost:5173/wp-content/plugins/react-wp/@react-refresh"
+    import RefreshRuntime from "http://localhost:5173/@react-refresh"
     RefreshRuntime.injectIntoGlobalHook(window)
     window.$RefreshReg$ = () => {}
     window.$RefreshSig$ = () => (type) => type
     window.__vite_plugin_react_preamble_installed__ = true
     </script>
-    <script type="module" src="http://localhost:5173/wp-content/plugins/react-wp/@vite/client"></script>
-    <script type="module" src="http://localhost:5173/wp-content/plugins/react-wp/src/main.jsx"></script>
-    </script> <div id="wp-react-options"></div>';
+    <script type="module" src="http://localhost:5173/@vite/client"></script>
+    <script type="module" src="http://localhost:5173/src/main.jsx"></script>
+    </script> <div id="WPReact-options"></div>';
   }
 
-  public function add_type_attribute_admin($tag, $handle, $src)
+  function add_type_attribute_admin($tag, $handle, $src)
   {
       // change the script tag by adding type="module" and return it.
-      if ($handle  === 'wp-react-plugin-options-dev') {
+      if ($handle  === 'WPReact-plugin-options-dev') {
           $tag = '<script type="module" src="' . esc_url($src) . '"></script>';
           return $tag;
       }
@@ -50,7 +50,7 @@ class plugin_options {
       return $tag;
   }
 
-  public function enqueue_admin_scripts($hook) {
+  function enqueue_admin_scripts($hook) {
 
     // Are we on the plugin options page?
     if( $hook === $this->plugin_options_page ) {
@@ -58,7 +58,7 @@ class plugin_options {
       // add react and react-dom from core
       $dep = ['wp-element'];
 
-      $handle = 'wp-react-plugin-options-';
+      $handle = 'WPReact-plugin-options-';
 
       add_filter('script_loader_tag', array($this,'add_type_attribute_admin'), 10, 3);
 
