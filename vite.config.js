@@ -27,10 +27,6 @@ export default defineConfig(({ mode }) => {
       server: {
         port: 5173
       },
-      rollupOptions: {
-        // overwrite default .html entry
-        input: './src/main.jsx',
-      },
     }
   }
   if (mode === 'production') {
@@ -55,10 +51,6 @@ export default defineConfig(({ mode }) => {
       plugins: [react()],
       server: {
         port: 5173
-      },
-      rollupOptions: {
-        // overwrite default .html entry
-        input: './src/main.jsx',
       },
     }
   }
