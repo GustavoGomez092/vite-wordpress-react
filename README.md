@@ -1,8 +1,15 @@
-# React + Vite
+# React + Vite WordPress Plugin Boilerplate
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules as a WordPress plugin.
 
-Currently, two official plugins are available:
+To start your project:<br/>
+```git clone https://github.com/GustavoGomez092/vite-wordpress-react.git```
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Before starting development:<br/>
+```npm install && npm run init```
+
+Development server:<br/>
+```npm run dev```
+
+Package to zip:<br/>
+```npm run package {{zipName}}```
