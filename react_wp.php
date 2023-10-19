@@ -18,17 +18,13 @@ class WPReact {
     function __construct() {
     require('plugin_options.php');
     add_action('wp_enqueue_scripts', [$this, 'REST_API_DATA_LOCALIZER'] );
-    add_action('wp_enqueue_scripts', [$this, 'custom_header_scripts'] );
     }
 
     /**
      * Script tag modifier
      */
 
-    function add_type_attribute_front($tag, $handle, $src) {
-
-        error_log($tag);
-        
+    function add_type_attribute_front($tag, $handle, $src) {        
         // change the script tag by adding type="module" and return it.
         if ($handle  === 'WPReact-plugin-dev' || $handle  === 'WPReact-plugin-prod') {
             $tag = '<script type="module" src="' . esc_url($src) . '"></script>';
@@ -111,6 +107,7 @@ class WPReact {
         wp_enqueue_style( $handle, plugins_url( "/dist/style.css", __FILE__ ), false, '0.1', 'all' );
         } else {
         $handle .= 'dev';
+        add_action('wp_enqueue_scripts', [$this, 'custom_header_scripts'] );
         }
 
         /**
