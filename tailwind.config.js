@@ -4,6 +4,10 @@ export default {
     "./index.html",
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
+  important: '#WPReact, #WPReact-options',
+  corePlugins: {
+    preflight: false,
+  },
   theme: {
     extend: {},
   },

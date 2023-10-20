@@ -18,6 +18,9 @@ class WPReact {
     function __construct() {
     require('plugin_options.php');
     add_action('wp_enqueue_scripts', [$this, 'REST_API_DATA_LOCALIZER'] );
+    if(!file_exists(dirname(__FILE__) . "/dist/react-wp.js")) {
+        add_action('wp_enqueue_scripts', [$this, 'custom_header_scripts'] );
+        }
     }
 
     /**
@@ -105,11 +108,7 @@ class WPReact {
         $handle .= 'prod';
         wp_enqueue_script( $handle, plugins_url( "/dist/react-wp.js", __FILE__ ), ['wp-element'], '0.1', true );
         wp_enqueue_style( $handle, plugins_url( "/dist/style.css", __FILE__ ), false, '0.1', 'all' );
-        } else {
-        $handle .= 'dev';
-        add_action('wp_enqueue_scripts', [$this, 'custom_header_scripts'] );
         }
-
         /**
         * React specific stuff to make hot reload work with vite on plugin development
         */

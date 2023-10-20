@@ -78,7 +78,8 @@ const nameReplace = async (appName) => {
           if(
             file.includes('react_wp.php') || 
             file.includes('plugin_options.php') || 
-            file.includes('main.jsx') 
+            file.includes('main.jsx') ||
+            file.includes('tailwind.config.js')
           ) results.push(file);
         }
       });
