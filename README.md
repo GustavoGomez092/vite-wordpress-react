@@ -5,8 +5,14 @@ This template provides a minimal setup to get React working in Vite with HMR and
 To start your project:<br/>
 ```git clone https://github.com/GustavoGomez092/vite-wordpress-react.git```
 
+Change directory into the project folder:<br/>
+```cd react-wp```
+
+Install dependencies:<br/>
+```npm install```
+
 Before starting development:<br/>
-```npm install && npm run init```
+```npm run init```
 
 Development server:<br/>
 ```npm run dev```
