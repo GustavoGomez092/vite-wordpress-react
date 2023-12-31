@@ -35,8 +35,7 @@ class plugin_options {
     window.__vite_plugin_react_preamble_installed__ = true
     </script>
     <script type="module" src="http://localhost:5173/@vite/client"></script>
-    <script type="module" src="http://localhost:5173/src/main.jsx"></script>
-    </script> <div id="WPReact-options"></div>';
+    </script> <div id="WPReact-options" class="WPReact"></div>';
   }
 
   function add_type_attribute_admin($tag, $handle, $src)
@@ -68,7 +67,7 @@ class plugin_options {
         wp_enqueue_style( $handle, plugins_url( "/dist/style.css", __FILE__ ), false, '0.1', 'all' );
         } else {
         $handle .= 'dev';
-        wp_enqueue_script( $handle, 'http://localhost:5173/src/main.js', ['wp-element'], '0.1', true );
+        wp_enqueue_script( $handle, 'http://localhost:5173/src/main.jsx', ['wp-element'], '0.1', true );
         
         }
     }

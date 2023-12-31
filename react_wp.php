@@ -112,7 +112,7 @@ class WPReact {
         /**
         * React specific stuff to make hot reload work with vite on plugin development
         */
-        $tag = '<div id="WPReact"></div>';
+        $tag = '<div id="WPReact" class="WPReact"></div>';
         
         return $tag;
     }

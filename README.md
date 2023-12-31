@@ -19,3 +19,8 @@ Development server:<br/>
 
 Package to zip:<br/>
 ```npm run package {{zipName}}```
+
+
+## Considerations
+
+To avoid style conflicts with any WordPress theme that you are using for your site, the plugin by default comes with a: "tw-" prefix on all classes (this can be disabled through the <code>tailwind.config.js</code>). We also added <code>scopedPreflightStyles</code> to limit Tailwind's CSS style resets to only happen at plugin container level.
