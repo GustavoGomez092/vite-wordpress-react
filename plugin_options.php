@@ -15,7 +15,7 @@ class plugin_options {
   }
 
   function register_plugin_settings() {
-      register_setting( 'WPReact-settings-group', 'WPReact-plugin' );
+      register_setting( 'vitereact-settings-group', 'vitereact-plugin' );
   }
 
   /**
@@ -35,13 +35,13 @@ class plugin_options {
     window.__vite_plugin_react_preamble_installed__ = true
     </script>
     <script type="module" src="http://localhost:5173/@vite/client"></script>
-    </script> <div id="WPReact-options" class="WPReact"></div>';
+    </script> <div id="vitereact-options" class="vitereact"></div>';
   }
 
   function add_type_attribute_admin($tag, $handle, $src)
   {
       // change the script tag by adding type="module" and return it.
-      if ($handle  === 'WPReact-plugin-options-dev') {
+      if ($handle  === 'vitereact-plugin-options-dev') {
           $tag = '<script type="module" src="' . esc_url($src) . '"></script>';
           return $tag;
       }
@@ -57,7 +57,7 @@ class plugin_options {
       // add react and react-dom from core
       $dep = ['wp-element'];
 
-      $handle = 'WPReact-plugin-options-';
+      $handle = 'vitereact-plugin-options-';
 
       add_filter('script_loader_tag', array($this,'add_type_attribute_admin'), 10, 3);
 

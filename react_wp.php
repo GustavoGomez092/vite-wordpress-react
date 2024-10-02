@@ -1,14 +1,14 @@
 <?php
 /*
-Plugin Name: WPReact Plugin
-Description: Use the [WPReact] shortcode to display the plugin
+Plugin Name: vitereact Plugin
+Description: Use the [vitereact] shortcode to display the plugin
 Version: 0.0.1
 Author: Gustavo Gomez
 Author URI: https://github.com/GustavoGomez092
 */
 
 
-class WPReact {
+class vitereact {
 
     protected $plugin_options_page = '';
 
@@ -29,10 +29,10 @@ class WPReact {
 
     function add_type_attribute_front($tag, $handle, $src) {        
         // change the script tag by adding type="module" and return it.
-        if ($handle  === 'WPReact-plugin-dev' || $handle  === 'WPReact-plugin-prod') {
+        if ($handle  === 'vitereact-plugin-dev' || $handle  === 'vitereact-plugin-prod') {
             $tag = '<script type="module" src="' . esc_url($src) . '"></script>';
             return $tag;
-        } else if ($handle  === 'WPReact') {
+        } else if ($handle  === 'vitereact') {
             $tag = '<script type="module" src="' . esc_url($src) . '"></script>';
             return $tag;
         }
@@ -45,7 +45,7 @@ class WPReact {
      */
     function REST_API_DATA_LOCALIZER () {
         // define the name of the file to be inserted
-        $name = 'WPReactData';
+        $name = 'vitereactData';
 
         // add the data you want to pass from PHP to JS
         // Data will be inserted in the window object with the name defined above
@@ -81,7 +81,7 @@ class WPReact {
     function custom_header_scripts()
     {   
         add_filter('script_loader_tag', [$this, 'add_type_attribute_front'], 10, 3);
-        $name = 'WPReact';
+        $name = 'vitereact';
 
         $head_script = '
         <script></script>
@@ -99,7 +99,7 @@ class WPReact {
      * Plugin shortcode for front-end
      */
     function plugin_shortcode( $atts ) {
-        $handle = 'WPReact-plugin-';
+        $handle = 'vitereact-plugin-';
 
         add_filter('script_loader_tag', [$this, 'add_type_attribute_front'], 10, 3);
 
@@ -112,7 +112,7 @@ class WPReact {
         /**
         * React specific stuff to make hot reload work with vite on plugin development
         */
-        $tag = '<div id="WPReact" class="WPReact"></div>';
+        $tag = '<div id="vitereact" class="vitereact"></div>';
         
         return $tag;
     }
@@ -142,7 +142,7 @@ class WPReact {
     }
 
     function api_init() {
-        register_rest_route('WPReact/v1', '/user/', [
+        register_rest_route('vitereact/v1', '/user/', [
             'methods'   => 'GET',
             'callback'  => [$this, 'get_user'],
             'permission_callback'   => function () {
@@ -155,7 +155,7 @@ class WPReact {
     * Initialize hooks.
     */
     function init() {
-        add_shortcode( 'WPReact', [$this, 'plugin_shortcode'] );
+        add_shortcode( 'vitereact', [$this, 'plugin_shortcode'] );
         add_action('rest_api_init', [$this , 'api_init']); 
         
         // adding nonce to the window object if logged in
@@ -171,5 +171,5 @@ class WPReact {
     }
 }
 
-$wp_react = new WPReact();
+$wp_react = new vitereact();
 $wp_react->init();

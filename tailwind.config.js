@@ -12,7 +12,7 @@ export default {
   },
   plugins: [        
     scopedPreflightStyles({
-    cssSelector: '.WPReact'
+    cssSelector: '.vitereact'
   }),
 ],
 }
